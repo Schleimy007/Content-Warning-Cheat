@@ -273,32 +273,7 @@ namespace TestMod
                 }
                 if (add4players)
                 {
-                    Steamworks.SteamGameServer.SetMaxPlayerCount(8);
-                    for (int i = 0; i < 5; i++)
-                    {
-                        // Créez une nouvelle instance de Player
-                        Player fakePlayer = new Player();
-
-                        // Définissez les propriétés du joueur fictif
-                        // Note : Vous devrez adapter ce code à la structure exacte de votre classe Player
-                        fakePlayer.name = "FakePlayer" + i;
-                        fakePlayer.data.health = 100f;
-                        fakePlayer.data.remainingOxygen = 500f;
-                        fakePlayer.data.currentStamina = 100f;
-
-                        PlayerHandler playerHandler = GameObject.FindObjectOfType<PlayerHandler>();
-
-                        // Assurez-vous que PlayerHandler existe
-                        if (playerHandler != null)
-                        {
-                            // Ajoutez le joueur fictif à la liste des joueurs du jeu
-                            playerHandler.AddPlayer(fakePlayer);
-                        }
-                        else
-                        {
-                            MelonLogger.Msg("Impossible de trouver PlayerHandler");
-                        }
-                    }
+                    //Removed due to never working
                 }
             
             lastUpdateTime = Time.time;
