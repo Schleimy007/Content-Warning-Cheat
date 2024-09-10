@@ -21,10 +21,7 @@ namespace TestMod
 
         public void Update()
         {
-
-            
-            
-
+        
         }
 
         Rect windowRect = new Rect(40,40,120,180);
