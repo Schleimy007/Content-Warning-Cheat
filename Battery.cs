@@ -26,6 +26,9 @@ namespace TestMod
         private static float timeSinceLastUpdate2 = 0.0f;
         private static float updateInterval3 = 1f; // Update 60 times per second
 
+        public static bool debugMode = false;
+
+        
         public static void Update()
         {
             timeSinceLastUpdate += Time.deltaTime;
@@ -47,7 +50,8 @@ namespace TestMod
 
         }
         public static void Update2()
-        {             timeSinceLastUpdate2 += Time.deltaTime;
+        {             
+            timeSinceLastUpdate2 += Time.deltaTime;
             if (timeSinceLastUpdate2 >= updateInterval3)
             {
                 videoCameras = GameObject.FindObjectsOfType<VideoCamera>().ToList(); // Find all VideoCamera objects
@@ -60,7 +64,9 @@ namespace TestMod
         {
             if (videoCameras == null)
             {
-                //MelonLogger.Error("VideoCamera list is null");
+                
+                if (debugMode)
+                    MelonLogger.Error("VideoCamera list is null");
                 return;
             }
 
@@ -68,7 +74,8 @@ namespace TestMod
             {
                 if (videoCamera == null)
                 {
-                    //MelonLogger.Error("videoCamera is null");
+                    if (debugMode)
+                        MelonLogger.Error("videoCamera is null");
                     continue;
                 }
 
@@ -76,14 +83,17 @@ namespace TestMod
                 FieldInfo videoInfoEntryField = videoCamera.GetType().GetField("m_recorderInfoEntry", BindingFlags.NonPublic | BindingFlags.Instance);
                 if (videoInfoEntryField == null)
                 {
-                    //MelonLogger.Error("VideoInfoEntry field not found");
+                    
+                    if (debugMode)
+                        MelonLogger.Error("VideoInfoEntry field not found");
                     continue;
                 }
 
                 object videoInfoEntry = videoInfoEntryField.GetValue(videoCamera);
                 if (videoInfoEntry == null)
                 {
-                    //MelonLogger.Error("videoInfoEntry is null");
+                    if(debugMode)
+                        MelonLogger.Error("videoInfoEntry is null");
                     continue;
                 }
 
@@ -91,7 +101,8 @@ namespace TestMod
                 FieldInfo timeLeftField = videoInfoEntry.GetType().GetField("timeLeft", BindingFlags.Public | BindingFlags.Instance);
                 if (timeLeftField == null)
                 {
-                    //MelonLogger.Error("timeLeft field not found");
+                    if (debugMode) 
+                        MelonLogger.Error("timeLeft field not found");
                     continue;
                 }
 
@@ -99,10 +110,13 @@ namespace TestMod
                 try
                 {
                     timeLeftField.SetValue(videoInfoEntry, 100f);
+                    if(debugMode)
+                        MelonLogger.Log("Camera Time Left set to 100");
                 }
                 catch (Exception ex)
                 {
-                    //MelonLogger.Error($"Failed to set timeLeft: {ex}");
+                    if(debugMode)
+                        MelonLogger.Error($"Failed to set timeLeft: {ex}");
                 }
             }
         }
@@ -126,7 +140,9 @@ namespace TestMod
         {
             if (objects == null)
             {
-                //Debug.LogError($"{type.Name} list is null");
+                
+                if(debugMode)
+                    Debug.LogError($"{type.Name} list is null");
                 return;
             }
 
@@ -137,7 +153,8 @@ namespace TestMod
 
                 if (batteryEntryField == null)
                 {
-                    //Debug.LogError("m_batteryEntry field not found in " + type.Name + " class");
+                    if (debugMode)
+                        Debug.LogError("m_batteryEntry field not found in " + type.Name + " class");
                     continue;
                 }
 
@@ -146,7 +163,9 @@ namespace TestMod
 
                 if (batteryEntry == null)
                 {
-                    //Debug.LogError("m_batteryEntry field is null in " + type.Name + " object");
+                    
+                    if(debugMode)
+                        Debug.LogError("m_batteryEntry field is null in " + type.Name + " object");
                     continue;
                 }
 
@@ -159,7 +178,8 @@ namespace TestMod
         {
             if (flares == null)
             {
-                //Debug.LogError("Flare list is null");
+                if(debugMode)
+                    Debug.LogError("Flare list is null");
                 return;
             }
 
@@ -170,7 +190,8 @@ namespace TestMod
 
                 if (lifeTimeEntryField == null)
                 {
-                    //Debug.LogError("m_lifeTimeEntry field not found in Flare class");
+                    if(debugMode)
+                        Debug.LogError("m_lifeTimeEntry field not found in Flare class");
                     continue;
                 }
 
@@ -179,7 +200,8 @@ namespace TestMod
 
                 if (lifeTimeEntry == null)
                 {
-                    //Debug.LogError("m_lifeTimeEntry field is null in Flare object");
+                    if(debugMode)
+                        Debug.LogError("m_lifeTimeEntry field is null in Flare object");
                     continue;
                 }
 
